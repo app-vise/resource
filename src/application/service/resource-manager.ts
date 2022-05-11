@@ -1,7 +1,6 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { UUID } from '@appvise/domain';
 import { Injectable } from '@nestjs/common';
-import { FileUpload, FileManager } from '../..';
 import {
   IncorrectMimetypeException,
   MaxFilesizeExceededException,
@@ -10,8 +9,12 @@ import {
   File,
   UploadFailedException,
 } from '../../domain';
-import { CreateResourceCommand } from '../../application/command';
-import { ResourceQuery } from '../../application/query';
+import {
+  FileUpload,
+  FileManager,
+  CreateResourceCommand,
+  ResourceQuery,
+} from '../../application';
 
 // TODO: Not depend on @nestjs/common
 @Injectable()

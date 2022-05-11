@@ -1,4 +1,8 @@
-import ResourceCommands from './command';
-import ResourceQueries from './query';
+import { handlers as ResourceCommandHandlers } from './command';
+import { handlers as ResourceQueryHandlers } from './query';
 
-export default [...ResourceCommands.handlers, ...ResourceQueries.handlers];
+export * from './command';
+export * from './query';
+export * from './service';
+
+export const handlers = [...ResourceCommandHandlers, ...ResourceQueryHandlers];
