@@ -6,4 +6,4 @@ export class ResourcesQuery extends SearchQuery {}
 import { ResourceHandler } from './resource.handler';
 import { ResourcesHandler } from './resources.handler';
 
-export const handlers = [ResourceHandler, ResourcesHandler];
+export const ResourceQueryHandlers = [ResourceHandler, ResourcesHandler];
