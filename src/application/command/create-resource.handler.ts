@@ -2,12 +2,16 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { DateVO, UUID, NotUniqueException } from '@appvise/domain';
 import { Resource, ResourceType, ResourceWriteRepository } from '../../domain';
 import { CreateResourceCommand } from './dto/create-resource.command';
+import { Inject } from '@nestjs/common';
 
 @CommandHandler(CreateResourceCommand)
 export class CreateResourceHandler
   implements ICommandHandler<CreateResourceCommand>
 {
-  constructor(private readonly writeRepository: ResourceWriteRepository) {}
+  constructor(
+    @Inject('ResourceWriteRepository')
+    private readonly writeRepository: ResourceWriteRepository
+  ) {}
 
   async execute(command: CreateResourceCommand): Promise<void> {
     if (command.id && (await this.writeRepository.existsById(command.id))) {

@@ -2,6 +2,7 @@ import { ICommandHandler, CommandHandler, EventBus } from '@nestjs/cqrs';
 import { ResourceDeleted, ResourceWriteRepository } from '../../domain';
 import { DeleteResourceCommand } from './dto/delete-resource.command';
 import { FileManager } from '../..';
+import { Inject } from '@nestjs/common';
 
 @CommandHandler(DeleteResourceCommand)
 export class DeleteResourceHandler
@@ -10,6 +11,7 @@ export class DeleteResourceHandler
   constructor(
     private readonly fileManager: FileManager,
     private readonly eventBus: EventBus,
+    @Inject('ResourceWriteRepository')
     private readonly writeRepository: ResourceWriteRepository
   ) {}
 
