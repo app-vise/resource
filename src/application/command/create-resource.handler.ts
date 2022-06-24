@@ -22,8 +22,8 @@ export class CreateResourceHandler
       {
         file: command.file,
         type: command.type as ResourceType,
-        createdAt: command.createdAt
-          ? new DateVO(command.createdAt)
+        mutatedAt: command.mutatedAt
+          ? new DateVO(command.mutatedAt)
           : undefined,
       },
       command.id ? new UUID(command.id) : undefined

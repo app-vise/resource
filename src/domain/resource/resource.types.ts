@@ -13,7 +13,9 @@ export enum MimeType {
 export interface CreateResourceProps {
   file: File;
   type: ResourceType;
-  createdAt?: DateVO;
+  mutatedAt?: DateVO;
 }
 
-export type ResourceProps = CreateResourceProps;
+export interface ResourceProps extends CreateResourceProps {
+  mutatedAt: DateVO;
+}

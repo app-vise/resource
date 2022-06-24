@@ -25,12 +25,15 @@ export class ResourceManager {
     private readonly fileUploader: FileManager
   ) {}
 
-  public async upload(
-    file: FileUpload,
-    destinationPath: string,
-    filename?: string,
-    resourceId?: string
-  ): Promise<Resource> {
+  public async upload(args: {
+    file: FileUpload;
+    destinationPath: string;
+    filename?: string;
+    resourceId?: string;
+    mutatedAt?: Date;
+  }): Promise<Resource> {
+    const { file, destinationPath, filename, resourceId, mutatedAt } = args;
+
     if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
       throw new IncorrectMimetypeException();
     }
@@ -56,7 +59,12 @@ export class ResourceManager {
     const id = resourceId ? new UUID(resourceId) : UUID.generate();
 
     await this.commandBus.execute(
-      new CreateResourceCommand(uploadedFile, ResourceType.image, id.value)
+      new CreateResourceCommand({
+        file: uploadedFile,
+        type: ResourceType.image,
+        id: id.value,
+        mutatedAt,
+      })
     );
 
     return await this.queryBus.execute<ResourceQuery, Resource>(

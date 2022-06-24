@@ -1,4 +1,9 @@
-import { AggregateRoot, ArgumentInvalidException, UUID } from '@appvise/domain';
+import {
+  AggregateRoot,
+  ArgumentInvalidException,
+  DateVO,
+  UUID,
+} from '@appvise/domain';
 import { File, ResourceCreated, ResourceType } from '../index';
 import { CreateResourceProps, ResourceProps } from './resource.types';
 
@@ -10,15 +15,11 @@ export class Resource extends AggregateRoot<ResourceProps> {
 
     const props: ResourceProps = {
       ...create,
+      mutatedAt: create.mutatedAt ?? DateVO.now(),
     };
-
-    const { createdAt } = props;
-    delete props.createdAt;
 
     const entity = new Resource({
       id,
-      createdAt,
-      updatedAt: createdAt,
       props,
     });
 
@@ -38,6 +39,10 @@ export class Resource extends AggregateRoot<ResourceProps> {
 
   get file(): File {
     return this.props.file;
+  }
+
+  get mutatedAt(): DateVO {
+    return this.props.mutatedAt;
   }
 
   validate(): void {

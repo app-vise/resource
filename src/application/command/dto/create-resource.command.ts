@@ -1,10 +1,15 @@
+import { Command, CommandProps } from '@appvise/domain';
 import { File } from '../../../domain';
 
-export class CreateResourceCommand {
-  constructor(
-    public readonly file: File,
-    public readonly type: string,
-    public readonly id?: string,
-    public readonly createdAt?: Date
-  ) {}
+export class CreateResourceCommand extends Command {
+  constructor(props: CommandProps<CreateResourceCommand>) {
+    super(props);
+
+    Object.assign(this, props);
+  }
+
+  readonly file!: File;
+  readonly type!: string;
+  readonly id?: string;
+  readonly mutatedAt?: Date;
 }
