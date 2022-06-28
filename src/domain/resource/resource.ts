@@ -47,7 +47,7 @@ export class Resource extends AggregateRoot<ResourceProps> {
     return this.props.clientCreatedAt;
   }
 
-  get clientUpdateAt(): DateVO {
+  get clientUpdatedAt(): DateVO {
     return this.props.clientUpdatedAt;
   }
 
