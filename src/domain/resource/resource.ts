@@ -12,10 +12,12 @@ export class Resource extends AggregateRoot<ResourceProps> {
 
   static create(create: CreateResourceProps, id?: UUID): Resource {
     id = id ?? UUID.generate();
+    const clientCreatedAt = create.clientCreatedAt ?? DateVO.now();
 
     const props: ResourceProps = {
       ...create,
-      mutatedAt: create.mutatedAt ?? DateVO.now(),
+      clientCreatedAt,
+      clientUpdatedAt: clientCreatedAt,
     };
 
     const entity = new Resource({
@@ -41,8 +43,12 @@ export class Resource extends AggregateRoot<ResourceProps> {
     return this.props.file;
   }
 
-  get mutatedAt(): DateVO {
-    return this.props.mutatedAt;
+  get clientCreatedAt(): DateVO {
+    return this.props.clientCreatedAt;
+  }
+
+  get clientUpdateAt(): DateVO {
+    return this.props.clientUpdatedAt;
   }
 
   validate(): void {

@@ -11,5 +11,5 @@ export class CreateResourceCommand extends Command {
   readonly file!: File;
   readonly type!: string;
   readonly id?: string;
-  readonly mutatedAt?: Date;
+  readonly clientCreatedAt?: Date;
 }
