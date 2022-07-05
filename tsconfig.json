@@ -8,7 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "@config/appvise/resource": [
-        "src/config/resource"
+        "./src/config/resource"
       ]
     }
   },
