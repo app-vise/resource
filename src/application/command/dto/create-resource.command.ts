@@ -10,6 +10,8 @@ export class CreateResourceCommand extends Command {
 
   readonly file!: File;
   readonly type!: string;
+  readonly parentId?: string;
+  readonly parentType?: string;
   readonly id?: string;
   readonly clientCreatedAt?: Date;
 }

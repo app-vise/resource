@@ -29,6 +29,8 @@ export class DeleteResourceHandler
       new ResourceDeleted({
         aggregateId: resource.id.value,
         filename: resource.file.name,
+        parentId: resource.parentId ? resource.parentId.value : undefined,
+        parentType: resource.parentType,
       })
     );
 

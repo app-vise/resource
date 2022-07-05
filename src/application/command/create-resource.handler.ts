@@ -1,6 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { DateVO, UUID, NotUniqueException } from '@appvise/domain';
-import { Resource, ResourceType, ResourceWriteRepository } from '../../domain';
+import {
+  Resource,
+  ResourceParentType,
+  ResourceType,
+  ResourceWriteRepository,
+} from '../../domain';
 import { CreateResourceCommand } from './dto/create-resource.command';
 import { Inject } from '@nestjs/common';
 
@@ -24,6 +29,10 @@ export class CreateResourceHandler
         type: command.type as ResourceType,
         clientCreatedAt: command.clientCreatedAt
           ? new DateVO(command.clientCreatedAt)
+          : undefined,
+        parentId: command.parentId ? new UUID(command.parentId) : undefined,
+        parentType: command.parentType
+          ? (command.parentType as ResourceParentType)
           : undefined,
       },
       command.id ? new UUID(command.id) : undefined

@@ -29,11 +29,20 @@ export class ResourceManager {
     file: FileUpload;
     destinationPath: string;
     filename?: string;
+    parentId?: string;
+    parentType?: string;
     resourceId?: string;
     clientCreatedAt?: Date;
   }): Promise<Resource> {
-    const { file, destinationPath, filename, resourceId, clientCreatedAt } =
-      args;
+    const {
+      file,
+      destinationPath,
+      filename,
+      parentId,
+      parentType,
+      resourceId,
+      clientCreatedAt,
+    } = args;
 
     if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
       throw new IncorrectMimetypeException();
@@ -63,6 +72,8 @@ export class ResourceManager {
       new CreateResourceCommand({
         file: uploadedFile,
         type: ResourceType.image,
+        parentId,
+        parentType,
         id: id.value,
         clientCreatedAt,
       })

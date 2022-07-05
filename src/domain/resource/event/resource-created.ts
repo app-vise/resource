@@ -8,4 +8,6 @@ export class ResourceCreated extends DomainEvent {
   }
 
   readonly filename!: string;
+  readonly parentId?: string;
+  readonly parentType?: string;
 }

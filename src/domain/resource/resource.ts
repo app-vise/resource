@@ -4,7 +4,12 @@ import {
   DateVO,
   UUID,
 } from '@appvise/domain';
-import { File, ResourceCreated, ResourceType } from '../index';
+import {
+  File,
+  ResourceCreated,
+  ResourceParentType,
+  ResourceType,
+} from '../index';
 import { CreateResourceProps, ResourceProps } from './resource.types';
 
 export class Resource extends AggregateRoot<ResourceProps> {
@@ -29,6 +34,8 @@ export class Resource extends AggregateRoot<ResourceProps> {
       new ResourceCreated({
         aggregateId: id.value,
         filename: props.file.name,
+        parentId: props.parentId ? props.parentId.value : undefined,
+        parentType: props.parentType,
       })
     );
 
@@ -41,6 +48,14 @@ export class Resource extends AggregateRoot<ResourceProps> {
 
   get file(): File {
     return this.props.file;
+  }
+
+  get parentId(): UUID | undefined {
+    return this.props.parentId;
+  }
+
+  get parentType(): ResourceParentType | undefined {
+    return this.props.parentType;
   }
 
   get clientCreatedAt(): DateVO {

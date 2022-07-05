@@ -8,4 +8,6 @@ export class ResourceDeleted extends DomainEvent {
   }
 
   readonly filename!: string;
+  readonly parentId?: string;
+  readonly parentType?: string;
 }
