@@ -2,9 +2,15 @@ import { DateVO, UUID } from '@appvise/domain';
 import { File } from '../../domain';
 
 // Import ResourceParentType from config to allow each implementing application to define their own types
-import { ResourceParentType } from '@config/appvise/resource';
+// TODO: Find way to allow project to provide config file with ResourceParentTypes
+// import { ResourceParentType } from '@config/appvise/resource';
+// export { ResourceParentType };
 
-export { ResourceParentType };
+export enum ResourceParentType {
+  general = 'general',
+  entity = 'entity',
+  estimate = 'estimate',
+}
 
 export enum ResourceType {
   image = 'image',
