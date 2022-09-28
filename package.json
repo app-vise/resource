@@ -1,6 +1,6 @@
 {
   "name": "@appvise/resource",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Base package for managing files using @appvise/domain package",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
