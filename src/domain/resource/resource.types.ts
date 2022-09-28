@@ -8,6 +8,7 @@ import { File } from '../../domain';
 
 export enum ResourceParentType {
   general = 'general',
+  user = 'user',
   estimate = 'estimate',
   registration = 'registration',
 }
