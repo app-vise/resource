@@ -32,6 +32,7 @@ export class ResourceManager {
     parentId?: string;
     parentType?: string;
     resourceId?: string;
+    creatorId: string;
     clientCreatedAt?: Date;
   }): Promise<Resource> {
     const {
@@ -41,6 +42,7 @@ export class ResourceManager {
       parentId,
       parentType,
       resourceId,
+      creatorId,
       clientCreatedAt,
     } = args;
 
@@ -75,6 +77,7 @@ export class ResourceManager {
         parentId,
         parentType,
         id: id.value,
+        creatorId,
         clientCreatedAt,
       })
     );
