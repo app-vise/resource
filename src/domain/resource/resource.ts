@@ -58,6 +58,10 @@ export class Resource extends AggregateRoot<ResourceProps> {
     return this.props.parentType;
   }
 
+  get creatorId(): UUID {
+    return this.props.creatorId;
+  }
+
   get clientCreatedAt(): DateVO {
     return this.props.clientCreatedAt;
   }

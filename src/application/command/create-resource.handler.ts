@@ -34,6 +34,7 @@ export class CreateResourceHandler
         parentType: command.parentType
           ? (command.parentType as ResourceParentType)
           : undefined,
+        creatorId: new UUID(command.creatorId),
       },
       command.id ? new UUID(command.id) : undefined
     );

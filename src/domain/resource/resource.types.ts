@@ -28,6 +28,7 @@ export interface CreateResourceProps {
   parentId?: UUID;
   parentType?: ResourceParentType;
   clientCreatedAt?: DateVO;
+  creatorId: UUID;
 }
 
 export interface ResourceProps extends CreateResourceProps {
