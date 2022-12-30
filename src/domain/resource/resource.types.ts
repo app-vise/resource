@@ -10,6 +10,7 @@ export enum ResourceParentType {
   general = 'general',
   user = 'user',
   estimate = 'estimate',
+  client = 'client',
   registration = 'registration',
 }
 
