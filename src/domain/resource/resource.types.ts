@@ -12,6 +12,7 @@ export enum ResourceParentType {
   estimate = 'estimate',
   client = 'client',
   registration = 'registration',
+  account = 'account',
 }
 
 export enum ResourceType {
