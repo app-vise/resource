@@ -8,12 +8,14 @@ import {
   ResourceType,
   File,
   UploadFailedException,
+  DeleteFailedException,
 } from '../../domain';
 import {
   FileUpload,
   FileManager,
   CreateResourceCommand,
   ResourceQuery,
+  DeleteResourceCommand,
 } from '../../application';
 
 // TODO: Not depend on @nestjs/common
@@ -85,5 +87,14 @@ export class ResourceManager {
     return await this.queryBus.execute<ResourceQuery, Resource>(
       new ResourceQuery(id.value)
     );
+  }
+
+  async delete(resourceId: string) {
+    try {
+      await this.commandBus.execute(new DeleteResourceCommand(resourceId));
+    } catch (err) {
+      console.error('Error deleting resource: ', err);
+      throw new DeleteFailedException();
+    }
   }
 }
