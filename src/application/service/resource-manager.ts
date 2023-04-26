@@ -1,6 +1,6 @@
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { CommandBus, EventBus, QueryBus } from '@nestjs/cqrs';
 import { UUID } from '@appvise/domain';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
   IncorrectMimetypeException,
   MaxFilesizeExceededException,
@@ -8,6 +8,9 @@ import {
   ResourceType,
   File,
   UploadFailedException,
+  DeleteFailedException,
+  ResourceWriteRepository,
+  ResourceDeleted,
 } from '../../domain';
 import {
   FileUpload,
@@ -22,7 +25,10 @@ export class ResourceManager {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-    private readonly fileUploader: FileManager
+    private readonly eventBus: EventBus,
+    private readonly fileManager: FileManager,
+    @Inject('ResourceWriteRepository')
+    private readonly writeRepository: ResourceWriteRepository
   ) {}
 
   public async upload(args: {
@@ -53,7 +59,7 @@ export class ResourceManager {
     let uploadedFile: File;
 
     try {
-      uploadedFile = await this.fileUploader.upload(
+      uploadedFile = await this.fileManager.upload(
         file,
         destinationPath,
         filename
@@ -85,5 +91,30 @@ export class ResourceManager {
     return await this.queryBus.execute<ResourceQuery, Resource>(
       new ResourceQuery(id.value)
     );
+  }
+
+  async delete(resourceId: string) {
+    try {
+      const resource = await this.writeRepository.findOneByIdOrThrow(
+        resourceId
+      );
+
+      // First delete file from storage
+      await this.fileManager.delete(resource.file);
+
+      await this.writeRepository.delete(resource);
+
+      this.eventBus.publish(
+        new ResourceDeleted({
+          aggregateId: resource.id.value,
+          filename: resource.file.name,
+          parentId: resource.parentId ? resource.parentId.value : undefined,
+          parentType: resource.parentType,
+        })
+      );
+    } catch (err) {
+      console.error('Error deleting resource: ', err);
+      throw new DeleteFailedException();
+    }
   }
 }

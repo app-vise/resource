@@ -5,6 +5,7 @@ export * from './repository';
 export { IncorrectMimetypeException } from './exception/incorrect-mimetype.exception';
 export { MaxFilesizeExceededException } from './exception/max-filesize-exceeded.exception';
 export { UploadFailedException } from './exception/upload-failed.exception';
+export { DeleteFailedException } from './exception/delete-failed.exception';
 
 // Models
 export { File } from './file';
